@@ -36,19 +36,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Set up directories
-UPLOAD_FOLDER = "uploads/backend"
-FRONTEND_UPLOAD_FOLDER = "uploads/frontend"
-SKIN_LESION_OUTPUT = "uploads/skin_lesion_output"
-SPEECH_DIR = "uploads/speech"
+# Set up directories (unified under data/)
+UPLOAD_FOLDER = "data/runtime/user_uploads"  # User uploaded images
+SKIN_LESION_OUTPUT = "data/runtime/analysis_output"  # Analysis results (segmentation, etc.)
+SPEECH_DIR = "data/runtime/speech"  # Temporary audio files
 
 # Create directories if they don't exist
-for directory in [UPLOAD_FOLDER, FRONTEND_UPLOAD_FOLDER, SKIN_LESION_OUTPUT, SPEECH_DIR]:
+for directory in [UPLOAD_FOLDER, SKIN_LESION_OUTPUT, SPEECH_DIR]:
     os.makedirs(directory, exist_ok=True)
 
 # Mount static files directory
 app.mount("/data", StaticFiles(directory="data"), name="data")
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Define allowed file extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -116,7 +114,7 @@ def chat(
         if response_data["agent_name"] == "SKIN_LESION_AGENT, HUMAN_VALIDATION":
             segmentation_path = os.path.join(SKIN_LESION_OUTPUT, "segmentation_plot.png")
             if os.path.exists(segmentation_path):
-                result["result_image"] = f"{config.api.base_url}/uploads/skin_lesion_output/segmentation_plot.png"
+                result["result_image"] = f"{config.api.base_url}/data/runtime/analysis_output/segmentation_plot.png"
             else:
                 print("Skin Lesion Output path does not exist.")
         
@@ -184,7 +182,7 @@ async def upload_image(
         if response_data["agent_name"] == "SKIN_LESION_AGENT, HUMAN_VALIDATION":
             segmentation_path = os.path.join(SKIN_LESION_OUTPUT, "segmentation_plot.png")
             if os.path.exists(segmentation_path):
-                result["result_image"] = f"{config.api.base_url}/uploads/skin_lesion_output/segmentation_plot.png"
+                result["result_image"] = f"{config.api.base_url}/data/runtime/analysis_output/segmentation_plot.png"
             else:
                 print("Skin Lesion Output path does not exist.")
         

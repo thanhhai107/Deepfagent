@@ -33,8 +33,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Create necessary directories
-RUN mkdir -p uploads/backend uploads/frontend uploads/skin_lesion_output uploads/speech data
+# Create necessary directories (unified data structure)
+RUN mkdir -p data/runtime/user_uploads data/runtime/analysis_output data/runtime/speech \
+             data/knowledge_base data/samples
 
 # Expose port
 EXPOSE 8000

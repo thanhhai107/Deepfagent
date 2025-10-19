@@ -179,5 +179,9 @@ cython_debug/
 *.mp3
 *.webm
 
-# ignore below since it gets updated on every local run
-uploads/skin_lesion_output/segmentation_plot.png
+# Ignore runtime/temporary data (new structure)
+data/runtime/
+
+# Note: Keep knowledge_base and samples in version control
+# data/knowledge_base/  - RAG data (keep in git)
+# data/samples/         - Demo images (keep in git)

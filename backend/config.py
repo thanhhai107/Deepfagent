@@ -57,9 +57,9 @@ class RAGConfig:
         self.embedding_dim = 1536  # Add the embedding dimension here
         self.distance_metric = "Cosine"  # Add this with a default value
         self.use_local = True  # Add this with a default value
-        self.vector_local_path = "./data/qdrant_db"  # Add this with a default value
-        self.doc_local_path = "./data/docs_db"
-        self.parsed_content_dir = "./data/parsed_docs"
+        self.vector_local_path = "./data/knowledge_base/qdrant_db"  # RAG vector database
+        self.doc_local_path = "./data/knowledge_base/docs_db"  # RAG document storage
+        self.parsed_content_dir = "./data/knowledge_base/parsed_docs"  # Parsed document pages
         self.url = os.getenv("QDRANT_URL")
         self.api_key = os.getenv("QDRANT_API_KEY")
         self.collection_name = "medical_assistance_rag"  # Ensure a valid name
@@ -128,7 +128,7 @@ class MedicalCVConfig:
         self.brain_tumor_model_path = "./agents/image_analysis_agent/brain_tumor_agent/models/brain_tumor_segmentation.pth"
         self.chest_xray_model_path = "./agents/image_analysis_agent/chest_xray_agent/models/covid_chest_xray_model.pth"
         self.skin_lesion_model_path = "./agents/image_analysis_agent/skin_lesion_agent/models/checkpointN25_.pth.tar"
-        self.skin_lesion_segmentation_output_path = "./uploads/skin_lesion_output/segmentation_plot.png"
+        self.skin_lesion_segmentation_output_path = "./data/runtime/analysis_output/segmentation_plot.png"  # Output for skin lesion analysis
         self.llm = AzureChatOpenAI(
             deployment_name = os.getenv("deployment_name"),  # Replace with your Azure deployment name
             model_name = os.getenv("model_name"),  # Replace with your Azure model name
